@@ -1,0 +1,7 @@
+{
+  "name":"teeflex-full-store",
+  "private":true,
+  "scripts":{"dev":"next dev","build":"next build","start":"next start","db:push":"prisma db push","db:seed":"tsx prisma/seed.ts"},
+  "dependencies":{"@prisma/client":"latest","bcryptjs":"latest","next":"latest","next-auth":"latest","razorpay":"latest","react":"latest","react-dom":"latest","zod":"latest"},
+  "devDependencies":{"prisma":"latest","tsx":"latest","typescript":"latest","@types/node":"latest","@types/react":"latest"}
+}

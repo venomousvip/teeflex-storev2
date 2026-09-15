@@ -1,0 +1,18 @@
+"use client";
+import {useMemo,useState} from "react";
+type Product=any;
+export function Storefront({products}:{products:Product[]}){
+ const [cart,setCart]=useState<any[]>([]),[search,setSearch]=useState(""),[size,setSize]=useState("M"),[selected,setSelected]=useState<any>(null);
+ const list=useMemo(()=>products.filter(p=>p.name.toLowerCase().includes(search.toLowerCase())),[products,search]);
+ const add=(p:any)=>setCart(c=>[...c,{...p,size,qty:1,key:crypto.randomUUID()}]);
+ const total=cart.reduce((s,x)=>s+x.price*x.qty,0);
+ return <main style={{background:"#090909",color:"#fff",minHeight:"100vh",fontFamily:"Arial,sans-serif"}}>
+ <div style={{background:"#d9ff42",color:"#000",padding:10,textAlign:"center",fontWeight:900,fontSize:12}}>FREE SHIPPING ABOVE ₹999 • COD AVAILABLE • TEEEFLEX</div>
+ <nav style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"20px 6%",borderBottom:"1px solid #292929",position:"sticky",top:0,background:"#090909",zIndex:10}}>
+ <b style={{fontSize:26,letterSpacing:3}}>TEE<span style={{color:"#d9ff42"}}>FLEX</span></b><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="SEARCH..." style={{background:"#151515",border:"1px solid #333",padding:12,color:"#fff",width:260}}/><button onClick={()=>alert(cart.length+" item(s) • Total ₹"+total)} style={{padding:"10px 15px"}}>🛒 {cart.length}</button></nav>
+ <section style={{padding:"90px 8%",background:"radial-gradient(circle at 20% 20%,#252525,transparent 40%)"}}><small style={{color:"#d9ff42",letterSpacing:3}}>PREMIUM STREETWEAR</small><h1 style={{fontSize:"clamp(55px,10vw,130px)",lineHeight:.8,margin:"25px 0"}}>WEAR THE<br/><span style={{color:"#d9ff42"}}>FLEX.</span></h1><p style={{color:"#aaa",maxWidth:500}}>Premium oversized T-shirts built for comfort and bold everyday style.</p></section>
+ <section style={{padding:"60px 6%"}}><h2 style={{fontSize:48}}>SHOP THE DROP</h2><div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:18}}>{list.map(p=><article key={p.id} style={{background:"#121212",border:"1px solid #242424"}}><img src={p.images[0]?.url} alt={p.name} style={{width:"100%",height:320,objectFit:"cover",background:"#222"}}/><div style={{padding:16}}><small style={{color:"#d9ff42"}}>PREMIUM TEE</small><h3>{p.name}</h3><b>₹{p.price}</b> <del style={{color:"#777"}}>{p.compareAtPrice&&"₹"+p.compareAtPrice}</del><br/><button onClick={()=>setSelected(p)} style={{marginTop:15,padding:12,width:"100%"}}>VIEW PRODUCT</button></div></article>)}</div></section>
+ {selected&&<div style={{position:"fixed",inset:0,background:"#000d",display:"grid",placeItems:"center",zIndex:20,padding:20}}><div style={{background:"#151515",maxWidth:700,width:"100%",padding:30}}><button onClick={()=>setSelected(null)} style={{float:"right"}}>✕</button><h2>{selected.name}</h2><p style={{color:"#aaa"}}>{selected.description}</p><h3>₹{selected.price}</h3><p>Choose Size</p>{["S","M","L","XL","XXL"].map(s=><button key={s} onClick={()=>setSize(s)} style={{marginRight:8,padding:12,background:size===s?"#d9ff42":"#222",color:size===s?"#000":"#fff"}}>{s}</button>)}<button onClick={()=>{add(selected);setSelected(null)}} style={{display:"block",marginTop:20,padding:15,width:"100%",background:"#d9ff42",fontWeight:900}}>ADD TO CART</button></div></div>}
+ <footer style={{padding:"40px 6%",borderTop:"1px solid #292929",color:"#888"}}>© 2026 TEEEFLEX • Premium Streetwear</footer>
+ </main>
+}

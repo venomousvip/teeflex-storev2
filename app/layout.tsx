@@ -1,0 +1,2 @@
+export const metadata={title:"TEEFLEX | Premium Streetwear",description:"Premium oversized streetwear"};
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body>{children}</body></html>}
